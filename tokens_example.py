@@ -1,5 +1,4 @@
 # fill these in and save-as tokens.py
-
 vennbot_token = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 steam_api_token = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 

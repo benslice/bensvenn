@@ -27,6 +27,7 @@ def get_my_friends():
     friends.append(tokens.benny)
     return friends
 
+
 def get_all_friends_names(friends=None):
     """ convert steam persona names to steamids, using my friendslist
         friends is a list of steamids"""
@@ -35,9 +36,6 @@ def get_all_friends_names(friends=None):
 
     name_to_steamid = get_names(steam_id=','.join(friends))
     return name_to_steamid
-        
-
-
 
 
 def get_names(steam_id=None):
@@ -69,6 +67,7 @@ def get_names(steam_id=None):
 
     return name_to_steamid
 
+
 def get_games(steam_id=None):
     # get list of appids owned by single steamid
     if steam_id is None:
@@ -88,6 +87,7 @@ def get_games(steam_id=None):
     rdict = json.loads(response.content.decode('utf-8'))
     games = [x['appid'] for x in rdict['response']['games']]
     return games
+
 
 def get_app_list():
     # get the whole list so we can map appids to names
@@ -112,11 +112,11 @@ def get_app_list():
     return app_names
 
 
-
 def venn_games(steam_ids=None, app_names=None):
     # take in a comma sep list of ids, 
-    # return a 
-    # score (num players) -> list of games
+    # returns a game set dict
+    # keys are ints (how many players own)
+    # values are each a list of games
 
     if steam_ids is None:
         steam_ids = '76561197961737526' # benny
@@ -132,21 +132,12 @@ def venn_games(steam_ids=None, app_names=None):
     appid_set = list(set(appid_list))
     appid_count = [appid_list.count(x) for x in appid_set]
 
-    #  order = argsort(appid_count)
-    #  appid_list = [appid_list[x] for x in order]
-    #  appid_count = [appid_count[x] for x in appid_count]
-
-    result = {}
+    game_set_dict = {}
     for app,score in zip(appid_set, appid_count):
-        if score not in result:
-            result[score] = [app_names[app]]
+        if score not in game_set_dict:
+            game_set_dict[score] = [app_names[app]]
         else:
-            result[score].append(app_names[app])
+            game_set_dict[score].append(app_names[app])
 
+    return game_set_dict
 
-    return result
-
-    
-#  def argsort(seq):
-    # http://stackoverflow.com/questions/3071415/efficient-method-to-calculate-the-rank-vector-of-a-list-in-python
-    #  return sorted(range(len(seq)), key=seq.__getitem__)
