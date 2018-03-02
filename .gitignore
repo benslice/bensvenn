@@ -1,0 +1,7 @@
+__pycache__/
+tokens.py
+requirements.txt
+user_database.json
+steamenv/
+.*.swp
+user_database.json.fulldisc
