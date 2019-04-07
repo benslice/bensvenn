@@ -65,8 +65,8 @@ class MyClient(discord.Client):
          # convert discord ids to steam ids
          for usr in target_handle.members:
             usr_id = str(usr.id)
-            if usr_id in dis_to_stm.index:
-               steamids.append(dis_to_stm.loc[usr_id,'steam_id'])
+            if usr_id in dis_to_stm:
+               steamids.append(dis_to_stm[usr_id])
             else:
                await message.channel.send('No steamID registered for %s' % usr.name)
                continue
@@ -123,9 +123,12 @@ class MyClient(discord.Client):
 # try loading some global lookup tables here ---------------
 
 # discord to steam name map, make them all strings
-dis_to_stm = pd.read_table('user_database.tsv', index_col=0)
-dis_to_stm.index = dis_to_stm.index.astype(str)
-dis_to_stm.steam_id = dis_to_stm.astype(str)
+dis_to_stm = {}
+with open('user_database.tsv', 'r') as fid:
+   for line in fid.readlines():
+      discord_id, steam_id = line.strip().split('\t')
+      dis_to_stm[discord_id] = steam_id
+
 
 # steam name to steam id map
 my_friends = vs.get_my_friends()
