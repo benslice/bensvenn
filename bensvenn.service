@@ -1,0 +1,13 @@
+# Ben's Venn
+[Unit]
+Description=Bens Venn Discord Bot
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/bensvenn
+ExecStart=/usr/bin/python3 /home/pi/bensvenn/bensvenn.py
+ExecStop=/usr/bin/pkill -9 -f bensvenn.py
+User=pi
+
+[Install]
+WantedBy=multi-user.target
