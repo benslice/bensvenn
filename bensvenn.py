@@ -5,7 +5,6 @@ import random
 import asyncio
 import vennsteam as vs
 import tokens
-import pandas as pd
 
 
 class MyClient(discord.Client):
